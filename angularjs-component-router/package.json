@@ -9,7 +9,7 @@
   "license": "ISC",
   "dependencies": {
     "@angular/router": "^0.2.0",
-    "bootstrap": "^3.3.5"
+    "bootstrap": "^3.3.7"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
