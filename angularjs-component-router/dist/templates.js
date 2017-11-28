@@ -1,0 +1,7 @@
+angular.module("app.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/app/app.html","<nav-bar></nav-bar>\r\n<main>\r\n  <ng-outlet></ng-outlet>\r\n</main>\r\n");
+$templateCache.put("components/navbar/navbar.html","<nav class=\"navbar navbar-default\">\r\n  <ul class=\"nav navbar-nav\">\r\n    <li><a ng-link=\"[\'/Home\']\">Home</a></li>\r\n    <li><a ng-link=\"[\'/About\', { name: \'Me\' }]\">About</a></li>\r\n    <li><a ng-if=\"!vm.Auth.loggedIn\" ng-link=\"[\'/Login\']\">Login</a></li>\r\n    <li><a ng-if=\"vm.Auth.loggedIn\" ng-click=\"vm.logout()\">Logout</a></li>\r\n    <li><a ng-link=\"[\'/Admin\', \'Dashboard\']\">Dashboard</a></li>\r\n  </ul>\r\n</nav>\r\n");
+$templateCache.put("routes/about/about.html","About {{ vm.name }}\r\n");
+$templateCache.put("routes/admin/admin.html","Welcome to Admin page\r\n<hr/>\r\n<ng-outlet></ng-outlet>");
+$templateCache.put("routes/dashboard/dashboard.html","<p>\r\n	Dashboard\r\n</p>");
+$templateCache.put("routes/home/home.html","Home");
+$templateCache.put("routes/login/login.html","<form ng-if=\"!vm.Auth.loggedIn\">\r\n	<input type=\"text\" ng-model=\"vm.username\">\r\n	<input type=\"password\" ng-model=\"vm.password\">\r\n	<button ng-click=\"vm.login()\" value=\"Login\">Login</button>\r\n</form>\r\n<p ng-if=\"vm.Auth.loggedIn\">You are logged in!</p>\r\n");}]);
