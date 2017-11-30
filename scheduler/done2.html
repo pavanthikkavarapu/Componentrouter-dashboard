@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="http://demos.telerik.com/kendo-ui/calendar/index">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }
+       .k-input:focus{
+           border:1px  red solid
+       }
+    </style>
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.3.1026/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.3.1026/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.3.1026/styles/kendo.material.mobile.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2017.3.1026/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.3.1026/js/kendo.all.min.js"></script>
+</head>
+<div id="example" class="container">
+     <div class="demo-section k-content">
+    <div class="row">
+      <div class="col-sm-5">
+         From:<input id="startDate" style="width: 100%;" type="text" title="datepicker" />
+          <span id="error" style="display:none;color:red">Start Date Should not be greater than end date</span>
+          To:<input id="endDate"  style="width: 100%;"  title="datepicker" placeholder="To" />
+        <!--  <input type="text" value=""  style="width: 100%;" placeholder="Description"/>-->
+          <input id="reason"  value="" style="width: 100%;"/></br>
+          <input type="button" value="Submit"/>
+        </div>
+      <div id="scheduler" class="col-sm-5"></div>
+    </div>
+    </div>
+</div>
+
+<script>
+        $(document).ready(function() {
+          var dataSource,length;
+          var displayData=[];
+          var obj={ taskID: "", title:"", start:"", end:"", isAllDay:true}
+          $("#startDate").kendoDatePicker({
+                value:new Date(),
+                min: new Date(),
+                change:showSchedule,
+                footer:false,
+                format: "dd/MM/yyyy"
+            });
+            $("#endDate").kendoDatePicker({
+                value:new Date(),
+                min: new Date(),
+                footer:false,
+                change:showSchedule,
+                format:"dd/MM/yyyy"
+
+            });
+            $("#reason").kendoComboBox({
+                 autoWidth: true,
+                dataSource: {
+                     data: ["Sick Leave","Casual Leave"]
+                },
+                change:getReason
+            });
+            $("#scheduler").kendoScheduler({
+                date: new Date(),
+               editable:false,
+                views: [ "month"]
+              });
+         function getReason(){
+              console.log(length)
+              if(length){
+                  obj.title=$("#reason").val();
+                  update(obj)
+              }
+              else{
+                showSchedule();
+              }
+          }
+        function showSchedule(){
+                startDate=$("#startDate").val();
+                endDate=$("#endDate").val();
+                startDate= startDate.split("/").reverse().join("/");
+                endDate=endDate.split("/").reverse().join("/");
+                if(new Date(startDate) > new Date(endDate))
+                {
+                    var data=dataSource.data();
+                    dataSource.remove(data[0]);
+                   $("#error").show();
+                }   
+                else{
+                    $("#error").hide();
+                    obj={ 
+                        taskID: 2,
+                        title: $("#reason").val(),
+                        start: new Date(startDate),
+                        end:new Date(endDate),
+                        isAllDay:true
+                       }
+                var scheduler = $("#scheduler").data("kendoScheduler");
+               dataSource= scheduler.dataSource;
+                length=dataSource._data.length;
+             if(length==0){
+                  dataSource.add(obj);
+                  length=1;
+                }
+               else{
+                update(obj)
+              }
+                }
+            }
+        function update(obj){
+            var data=dataSource.data();
+            dataSource.remove(data[0]);
+            dataSource.add(obj);
+        }
+           
+        });
+</script>
