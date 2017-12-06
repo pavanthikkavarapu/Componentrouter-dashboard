@@ -1,0 +1,35 @@
+<!-- <form ng-if="!vm.Auth.loggedIn">
+	<input type="text" ng-model="vm.username">
+	<input type="password" ng-model="vm.password">
+	<button ng-click="vm.login()" value="Login">Login</button>
+</form>
+<p ng-if="vm.Auth.loggedIn">You are logged in!</p> -->
+
+<html>
+<head>
+<style>
+	form {
+	width: 400px;
+	margin : 30px;
+
+}
+</style>
+</head>
+<body>
+	<form ng-if="!vm.Auth.loggedIn">
+		<div class="form-group">
+		  <label for="exampleInputEmail1">Email address</label>
+		  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" 
+		  ng-model="vm.username">
+		  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputPassword1">Password</label>
+		  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="vm.password">
+		</div>
+		
+		<button  ng-click="vm.login()" type="submit" class="btn btn-primary">Login</button>
+	  </form>
+	  <p ng-if="vm.Auth.loggedIn">You are logged in!</p>
+</body>
+</html>
